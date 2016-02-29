@@ -1,10 +1,10 @@
-var react = require('react-native');
+var React = require('react-native');
 
 var {
-  View,
   Text,
+  View,
   Image,
-  StyleSheet,
+  StyleSheet
 } = React;
 
 var styles = StyleSheet.create({
@@ -33,9 +33,9 @@ var styles = StyleSheet.create({
   }
 });
 
-class Badge extends React.Component({
+class Badge extends React.Component{
   render(){
-    return(
+    return (
       <View style={styles.container}>
         <Image style={styles.image} source={{uri: this.props.userInfo.avatar_url}}/>
         <Text style={styles.name}> {this.props.userInfo.name} </Text>
@@ -43,7 +43,7 @@ class Badge extends React.Component({
       </View>
     )
   }
-})
+};
 
 Badge.propTypes = {
   userInfo: React.PropTypes.object.isRequired
