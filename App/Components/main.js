@@ -1,6 +1,7 @@
 var React = require('react-native');
 var api = require('../Utils/api')
 var Dashboard = require('./Dashboard')
+
 var {
   View,
   Text,
@@ -88,16 +89,15 @@ class Main extends React.Component{
         this.props.navigator.push({
           title: res.name || 'Select an Option',
           component: Dashboard,
-          passProp: {userInfo: res}
+          passProps: {userInfo: res}
         });
         this.setState({
           isLoading: false,
           error: false,
+          uername:''
         })
       }
     })
-    //fetch data ffrom github
-    // reroute to our next passing that github info
   }
   render(){
     var showErr = (

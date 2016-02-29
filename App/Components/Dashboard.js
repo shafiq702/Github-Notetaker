@@ -40,9 +40,13 @@ class Dashboard extends React.Component{
     }
     return obj;
   }
+  goToProfile(){}
+  goToRepos(){}
+  goToNotes(){}
   render(){
     return (
       <View style={styles.container}>
+       <Image source={{uri: this.props.userInfo.avatar_url}} style={styles.image}/>
       <TouchableHighlight
         style={this.makeBackground(0)}
         onPress={this.goToProfile.bind(this)}
