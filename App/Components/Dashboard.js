@@ -1,5 +1,9 @@
 var React = require('react-native');
-var Profile = require('./Profile')
+var Profile = require('./Profile');
+var Repositories = require('./Repositories');
+var api = require('../Utils/api');
+var Notes = require('./Notes');
+
 var {
   Text,
   View,
@@ -47,30 +51,60 @@ class Dashboard extends React.Component{
       passProps: {userInfo: this.props.userInfo}
     })
   }
-  goToRepos(){}
-  goToNotes(){}
+  goToRepos(){
+    api.getRepos(this.props.userInfo.login)
+    .then((res)=>{
+      console.log(res)
+      this.props.navigator.push({
+        component: Repositories,
+        title: 'Repos',
+        passProps: {
+          userInfo: this.props.userInfo,
+          repos: res
+        }
+      })
+    })
+
+  }
+  goToNotes(){
+    api.getNotes(this.props.userInfo.login)
+      .then((jsonRes) => {
+        jsonRes = jsonRes || {};
+        this.props.navigator.push({
+          component: Notes,
+          title: 'Notes',
+          passProps: {
+            notes: jsonRes,
+            userInfo: this.props.userInfo
+          }
+        });
+      });
+  }
   render(){
     return (
       <View style={styles.container}>
        <Image source={{uri: this.props.userInfo.avatar_url}} style={styles.image}/>
-      <TouchableHighlight
-        style={this.makeBackground(0)}
-        onPress={this.goToProfile.bind(this)}
-        underlayColor='#88D4F5'>
-        <Text style={styles.buttonText}> View Profile </Text>
-      </TouchableHighlight>
-      <TouchableHighlight
-      style={this.makeBackground(1)}
-        onPress={this.goToRepos.bind(this)}
-        underlayColor='#88D4F5'>
-        <Text style={styles.buttonText}> View Repos </Text>
-      </TouchableHighlight>
-      <TouchableHighlight
-      style={this.makeBackground(2)}
-        onPress={this.goToNotes.bind(this)}
-        underlayColor='#88D4F5'>
-        <Text style={styles.buttonText}> View Notes </Text>
-      </TouchableHighlight>
+
+        <TouchableHighlight
+          style={this.makeBackground(0)}
+          onPress={this.goToProfile.bind(this)}
+          underlayColor='#88D4F5'>
+          <Text style={styles.buttonText}> View Profile </Text>
+        </TouchableHighlight>
+
+        <TouchableHighlight
+        style={this.makeBackground(1)}
+          onPress={this.goToRepos.bind(this)}
+          underlayColor='#88D4F5'>
+          <Text style={styles.buttonText}> View Repos </Text>
+        </TouchableHighlight>
+
+        <TouchableHighlight
+        style={this.makeBackground(2)}
+          onPress={this.goToNotes.bind(this)}
+          underlayColor='#88D4F5'>
+          <Text style={styles.buttonText}> View Notes </Text>
+        </TouchableHighlight>
       </View>
     )
   }
